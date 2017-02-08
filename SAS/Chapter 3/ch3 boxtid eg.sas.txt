@@ -1,0 +1,46 @@
+* Box-Tidwell gives a better result than the square root transform in text;
+data sales;
+ input x y;
+ label x='Days of Training'
+       y='Performance Score';
+ cards;
+ .5 42.5
+ .5 50.6
+ 1 68.5
+ 1 80.7
+ 1.5 89
+ 1.5 99.6
+ 2 105.3
+ 2 111.8
+ 2.5 112.3
+ 2.5 125.7
+ ;
+ run;
+ proc reg data=sales;
+ model y=x;
+run;
+ %boxtid(
+   data=sales,     /* name of input data set */
+   resp=y,           /* response variable */
+   yvar=y,           /* response variable */
+   xvar=x,           /* predictors */
+   xtrans=x,         /* variables to be transformed: names or indices */
+	prefix=t_,       /* prefix for names of transformed variables */
+   id=,             /* name of ID variable */
+   out=boxtid,      /* name of output data set */
+   round=0.5,       /* round powers */
+   maxit=15,        /* maximum number of iterations */
+   converge=0.005,  /* convergence criterion */
+	quiet=N
+       );
+data sales;
+ set sales;
+ xgamma=x**.18;
+ xp5=sqrt(x);
+ label xgamma='x^.18'
+       xp5='sqrt x';
+run;
+proc reg data=sales;
+ model y=xp5;
+ model y=xgamma;
+run;

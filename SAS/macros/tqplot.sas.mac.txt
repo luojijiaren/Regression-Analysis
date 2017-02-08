@@ -1,0 +1,132 @@
+***********************************************************************
+*               MACRO: TQPLOT                                         
+* PURPOSE: THIS MACRO PERFORMS A REGRESSION AND PLOTS THE (EXTERNALLY)
+* STUDENTIZED RESIDUALS VERSUS QUANTILES OF THE APPROPRIATE T         
+* DISTRIBUTION, AND WRITES THE QUANTILES INTO AN OUTPUT DATA SET.     
+* INPUT:
+* DNAME: NAME  OF INPUT DATA SET
+* Y:     RESPONSE VARIABLE
+* FIT:   Y IF REGRESSION FIT, N IF GLM FIT
+* CLASS: NAMES OF CLASS VARIABLES, SEPARATED BY SPACES
+* VAR:   NAMES OF EFFECTS, SEPARATED BY SPACES
+* ONAME: NAME OF OUTPUT DATA SET            
+**********************************************************************;
+
+%macro tqplot(dname,y,fit,class,var,oname);
+
+%if %upcase(&fit)=Y %then %goto regfit;
+
+proc glm data=&dname outstat=zzzout;
+ class &class;
+ model &y=&var;
+ output out=&oname r=resid rstudent=studres p=fitted;
+run;
+
+%goto aregfit;
+
+%regfit:
+
+proc glm data=&dname outstat=zzzout;
+ model &y=&var;
+ output out=&oname r=resid rstudent=studres p=fitted;
+run;
+
+%aregfit:
+
+data _null_;
+ set zzzout;
+ if _SOURCE_^='ERROR' then delete;
+ df=df-1;
+ call symput('df',left(put(df,best10.)));
+run;
+
+proc rank data=&oname out=zzzzout normal=blom;
+ var studres;
+ ranks qres;
+run;
+
+data zzzzout;
+ set zzzzout;
+ quantile=tinv(probnorm(qres),&df);
+ drop qres;
+run;
+
+data &oname;
+ set zzzzout;
+run;
+
+proc means data=zzzzout noprint;
+ var studres quantile;
+ output out=zzzmin min=ms mq;
+run;
+
+data zzzmin;
+ set zzzmin;
+ ms=min(ms,mq);
+ mq=ms;
+run;
+
+proc means data=zzzzout noprint;
+ var studres quantile;
+ output out=zzzmax max=ms mq;
+run;
+
+data zzzmax;
+ set zzzmax;
+ ms=max(ms,mq);
+ mq=ms;
+run;
+
+data testy;
+ set zzzmin zzzmax;
+run;
+
+data zzzzzout;
+ merge zzzzout testy;
+ keep studres quantile;
+run;
+
+proc sort data=zzzzzout;
+ by quantile;
+run;
+
+data plotit;
+ set zzzzzout end=end;
+ if _n_=1 then do;ly=min(quantile,studres);reference=min(quantile,studres);end;***Sets reference coordinates;
+ if end then do;ly=max(quantile,studres);reference=max(quantile,studres);end;***Sets reference coordinates;
+ t_p_val=1-probt(abs(studres),&df);***Sets a p-value for abs(studres);
+ run;
+
+title 'Plot of Studentized Residuals vs t Quantiles';
+proc sgplot data=plotit;
+ scatter y=studres x=quantile;
+ series y=ly x=reference;
+run;
+title ' ';
+quit;
+
+/*
+data plotit;
+ set zzzzzout end=end;
+ if _n_=1 then do;lx=min(quantile,studres);reference=min(quantile,studres);end;***Sets reference coordinates;
+ if end then do;lx=max(quantile,studres);reference=max(quantile,studres);end;***Sets reference coordinates;
+ t_p_val=1-probt(abs(studres),&df);***Sets a p-value for abs(studres);
+ run;
+
+title 'Plot of Studentized Residuals vs t Quantiles';
+proc sgplot data=plotit;
+ scatter x=studres y=quantile;
+ series x=lx y=reference;
+run;
+title ' ';
+quit;
+*/
+
+
+%mend tqplot;
+
+/*
+Examples of calls:
+%tqplot(dwaine,sales,y,targtpop dispoinc,targtpop dispoinc,tqplot_out);
+%tqplot(anova_eg,response,n,a b,a b a*b,anova_eg_out);
+*/

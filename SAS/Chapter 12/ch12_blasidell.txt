@@ -1,0 +1,45 @@
+data blaisdell;
+ input y x;
+ label y='company sales'
+       x='industry sales';
+cards;
+  20.96  127.3
+  21.40  130.0
+  21.96  132.7
+  21.52  129.4
+  22.39  135.0
+  22.76  137.1
+  23.48  141.2
+  23.66  142.8
+  24.10  145.5
+  24.01  145.3
+  24.54  148.3
+  24.30  146.4
+  25.00  150.2
+  25.64  153.1
+  26.36  157.3
+  26.98  160.7
+  27.52  164.2
+  27.78  165.6
+  28.24  168.7
+  28.78  171.7
+    .    175.3
+  ;
+run;
+proc reg data=blaisdell;
+  model y=x/dwprob;
+  output out=b_out p=forecast lcl=lcl ucl=ucl;
+run;
+quit;
+proc print;run;
+
+* NOTE: proc autoreg does more extensive and sophisticated analyses, but is not available in SAS UE;
+proc autoreg data=blaisdell;
+  model y=x/dwprob nlag=1 method=yw;*Fancier version of Cochrane-Orcutt;
+  *model y=x/dwprob nlag=1 method=uls;*Fancier version of Hilreth-Lu;
+  *model y=x/dwprob nlag=1 method=ml;
+  output out=b_out p=forecast lcl=lcl ucl=ucl;
+run;
+quit;
+proc print;run;
+

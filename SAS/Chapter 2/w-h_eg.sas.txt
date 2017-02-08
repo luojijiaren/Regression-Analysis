@@ -1,0 +1,51 @@
+proc reg data=MA542.toluca;
+  model workhours = lotsize;
+run;
+/* SAS proc reg automatically plots 95% **INDIVIDUAL** confidence limits.
+   Below, we create and plot **SIMULTANEOUS** 95%  Working-Hotelling confidence
+   limits with a specific estimate at lotsize 100
+ */
+data dummy; 
+input lotsize check; 
+cards;
+  100 1
+  ;
+run;
+data temp; 
+ set MA542.toluca dummy;
+run;
+proc reg data=temp noprint;
+  model workhours = lotsize/alpha=.1;
+  output out=out1 p=Yhat stdp=seYhat lclm=lclm uclm=uclm;
+    /* KEY: stdp is SE of mean prediction */
+data out1; 
+ set out1;
+  alpha = 0.1;  /* 1-alpha is simult. conf. level */
+  p = 2;         /* # of beta's (including intercept) */
+  n = 25;        /* sample size */
+  W = sqrt(p*finv(1-alpha,p,n-p));  /* WH crit. val. */
+  WH_upper = Yhat + W*seYhat;
+  WH_lower = Yhat - W*seYhat;
+ run;
+proc print data=out1;
+  where check = 1;
+  var lotsize Yhat seYhat lclm uclm WH_lower WH_upper;
+run;
+proc sort data=out1;
+ by lotsize;
+run;
+title 'Least Squares Fit with Level 0.90 W-H Confidence Band, Toluca Data';
+proc sgplot data=out1;
+  band x=lotsize lower=WH_lower upper=WH_upper /nofill
+       legendlabel="90% W-H Confidence Band" name="band1"
+       lineattrs= (pattern=solid color=black);
+  band x=lotsize lower=lclm upper=uclm/nofill
+       legendlabel="90% Individual Confidence Band" name="band2"
+       lineattrs= (pattern=dashdashdot color=red);
+  scatter x=lotsize y=workhours;
+  series x=lotsize y=Yhat/ lineattrs=GraphPrediction
+         legendlabel="Predicted Fit" name="series";
+  keylegend "series" "band1" "band2" / location=inside position=bottomright;
+run;
+title  ' ';
+

@@ -1,0 +1,30 @@
+*First, create a data set containing two new x values at which to do prediction and estimation;
+data new;
+ input lotsize workhours;
+cards;
+65 .
+100 .
+;
+run;
+* Create a new data set with these new observations appended to the original;
+data temp;
+ set ma542.toluca new;
+run;
+/*
+Run the regression
+*We can get confidence and prediction limits output using the model statement
+*and written to a SAS file using the output statement.
+*From the model statement: 
+* clb option gives confidence intervals for slope and intercept
+* cli for individual predicted value
+* clm for mean response
+* alpha sets confidence level
+*The output statement produces the same results with a column for lotsize 
+*as well and writes them to the output data set toluca_out.
+*/
+proc reg data = temp;
+  model workhours=lotsize/clb cli clm alpha=.1;
+  output out=toluca_out predicted=predicted stdp=s2yh lclm=lcl_mean uclm=ucl_mean stdi=s2pred lcl=lcl_pred ucl=ucl_pred ;
+ run;
+quit;
+proc print;run;

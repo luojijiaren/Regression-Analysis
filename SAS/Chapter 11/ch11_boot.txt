@@ -1,0 +1,49 @@
+/*
+Bootstrapping regression parameter estimates. Using SAS 9.4 or SAS Studio,
+you can use an include statement to reference the macro. For SAS UE, I haven't been
+able to get this to work, so I just submit the entire jackboot.sas file from the code 
+window prior to running the rest of the code.
+*/
+
+%inc 'R:\SAS\mymacs\jackboot.sas';
+
+/*
+This first bit does residual (fixed x) resampling:
+*/
+
+title 'Residual Resampling';
+proc reg data=ma542.toluca;
+ model workhours=lotsize;
+ output out=fboot_out r=resid p=pred;
+run; 
+%macro analyze(data=,out=);
+   options nonotes;
+   proc reg data=&data noprint
+            outest=&out(drop=workhours _RMSE_);
+      model workhours=lotsize;
+      %bystmt;
+   run;
+   options notes;
+%mend;
+%boot(data=fboot_out,residual=resid,equation=workhours=pred+resid,random=123,samples=1000)
+%bootci(bca);
+%bootci(pctl);
+
+/*
+This next bit does data (multivariate) resampling:
+*/
+
+title 'Multivariate Resampling';
+%macro analyze(data=,out=);
+  options nonotes;
+  proc reg data=&data noprint
+           outest=&out(drop=workhours _RMSE_);
+     model workhours=lotsize;
+     %bystmt;
+  run;
+  options notes;
+%mend;
+%boot(data=ma542.toluca,random=123,samples=1000)
+%bootci(bca);
+%bootci(pctl);
+title ' ';

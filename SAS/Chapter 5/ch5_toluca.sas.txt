@@ -1,0 +1,36 @@
+data toluca;
+ set  ma542.toluca;
+ int=1;
+run;
+/*
+proc iml enables computations in a vector-matrix environment with
+interface to SAS data files
+*/
+proc iml;
+ use toluca;
+ read all var{workhours} into y; 
+ read all var{int lotsize} into x;
+ n=nrow(x);
+ xpx=x`*x;
+ print xpx;
+ xpx_inv=inv(xpx);
+ print xpx_inv;
+ b=xpx_inv*x`*y;
+ print b;
+ yhat=x*b;
+ print yhat;
+ h=x*xpx_inv*x`;
+ print h;
+ e=y-yhat;
+ print e;
+ sse=e`*e;
+ mse=sse/(n-2);
+ print sse mse;
+ s2b=mse*xpx_inv;
+ print s2b;
+ x0={1 65};
+ s2yh=x0*s2b*x0`;
+ print s2yh;
+ s2pred=mse+s2yh;
+ print s2pred;
+quit;

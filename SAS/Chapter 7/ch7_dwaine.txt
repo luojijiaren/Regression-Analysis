@@ -1,0 +1,49 @@
+data dwaine;
+  input x1 x2 y;
+  label x1='target population'
+        x2='disposable income'
+		y='sales';
+  cx1=x1; cx2=x2; cy=y;
+cards;
+  68.5  16.7  174.4
+  45.2  16.8  164.4
+  91.3  18.2  244.2
+  47.8  16.3  154.6
+  46.9  17.3  181.6
+  66.1  18.2  207.5
+  49.5  15.9  152.8
+  52.0  17.2  163.2
+  48.9  16.6  145.4
+  38.4  16.0  137.2
+  87.9  18.3  241.9
+  72.8  17.1  191.1
+  88.4  17.4  232.0
+  42.9  15.8  145.3
+  52.5  17.8  161.1
+  85.7  18.4  209.7
+  41.3  16.5  146.4
+  51.7  16.3  144.0
+  89.6  18.1  232.6
+  82.7  19.1  224.1
+  52.3  16.0  166.5
+  65.4  17.6    .  
+  53.1  17.7    .  
+  ;
+run;
+proc reg data = dwaine;
+  model y=x1 x2/ stb;*stb prints the standardized coeffs;
+run;
+quit;
+* You can also regress the standardized variables (through the origin);
+data cdwaine;
+ set dwaine;
+ if ~(y=.);
+run;
+proc standard data=cdwaine out=cdwaine mean=0 std=1;
+ var cx1 cx2 cy;
+run;
+proc reg data = cdwaine;
+  model cy=cx1 cx2/ noint;
+run;
+quit;
+

@@ -1,0 +1,14 @@
+data plotit;
+ set ma542.galton_father_son;
+ sdrat=2.8147/2.7449;
+ sd=68.6841+sdrat*(x-67.6871);
+ reg=68.6841+.5013*sdrat*(x-67.6871);
+run;
+title 'Galton Father-Son Height Data';
+proc sgplot data=plotit;
+  band x=x lower=reg upper=reg/outline lineattrs=(color=red) legendlabel="LS Line" name="LS";
+  band x=x lower=sd upper=sd/outline lineattrs=(color=blue) legendlabel="SD Line" name="SD";
+  scatter x=x y=y;
+  keylegend "LS" "SD"; 
+run;
+title ' ';

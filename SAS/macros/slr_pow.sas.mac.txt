@@ -1,0 +1,38 @@
+/*
+Macro to compute power of t-test for the slope of an SLR
+INPUTS:
+*sigma2: sigma-squared, the error variance
+*ssx:    sum(X_i-X-bar)^2
+*n       number of observations
+*beta10  value of slope under H0 (usually 0)
+*beta_lo lower bound of betas at which to compute power
+*beta_up upper bound of betas at which to compute power
+*alpha   desired significance level of test
+OUTPUT:
+*Table of power values 
+*/
+%macro slr_pow(sigma2,ssx,n,beta10,beta_lo,beta_up,alpha);
+data slr_pow1;
+ df=&n-2;
+ stderr=sqrt(&sigma2/&ssx);
+ crit=tinv(&alpha/2,df);
+ abscrit=abs(crit);
+ beta10=&beta10;
+ do i=1 to 101;
+  beta1=&beta_lo+(i-1)*(&beta_up-&beta_lo)/100; 
+  delta=abs(beta1-&beta10)/stderr;
+  power=probt(crit,df,delta)+1-probt(abscrit,df,delta);
+  output;
+ end;
+run;
+* Print the results;
+proc print data=slr_pow1 noobs;
+ var beta10 beta1 power;
+run;
+* Plot the results;
+proc sgplot data=slr_pow1;
+ series y=power x=beta1;
+run;
+%mend slr_pow;
+* From the example on p. 51 of the text;
+%slr_pow(2500,19800,25,0,0,1.5,.05);

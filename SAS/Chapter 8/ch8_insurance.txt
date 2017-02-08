@@ -1,0 +1,68 @@
+data insurance;
+  input y x1 x2;
+  label  y = 'Months'
+        x1 = 'Size'
+	x2 = 'Firm Indicator';
+cards;
+  17  151  0
+  26   92  0
+  21  175  0
+  30   31  0
+  22  104  0
+   0  277  0
+  12  210  0
+  19  120  0
+   4  290  0
+  16  238  0
+  28  164  1
+  15  272  1
+  11  295  1
+  38   68  1
+  31   85  1
+  21  224  1
+  20  166  1
+  13  305  1
+  30  124  1
+  14  246  1
+;
+run;
+proc reg data = insurance;
+  model y = x1 x2/ clb;
+run;
+quit;
+* Let's make a plot;
+data insurance1;
+  set insurance;
+  if x2 = 0 then do;
+  z1 = x1;
+  y1 = y;
+  end;
+  if x2= 1 then do;
+  z2 = x1 ;
+  y2 = y;
+  end;
+run;
+proc reg data = insurance1 noprint;
+  model y = x1 x2 ;
+  output out = temp1 p = p;
+run;
+quit;
+data temp1;
+ set temp1;
+ p1=p;
+ if x2=1 then p1=.;
+ p2=p;
+ if x2=0 then p2=.;
+ label  y1 = 'Mutual Firms'
+        y2 = 'Stock Firms'
+	    p1='Fitted Mutual Firms'
+	    p2='Fitted Stock Firms';
+run;
+title 'KNN Figure 8.12';
+proc sgplot data=temp1;
+ scatter y=y1 x=z1/MARKERATTRS=(color=red symbol=Circle);
+ scatter y=y2 x=z2/MARKERATTRS=(color=blue symbol=CircleFilled);
+ series y=p1 x=z1/lineattrs= (color=red);
+ series y=p2 x=z2/lineattrs= (color=blue);
+run;
+title '';

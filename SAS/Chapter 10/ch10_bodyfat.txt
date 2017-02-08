@@ -1,0 +1,75 @@
+data bodyfat;
+ input triceps thigh midarm bodyfat;
+cards;
+  19.5  43.1  29.1  11.9
+  24.7  49.8  28.2  22.8
+  30.7  51.9  37.0  18.7
+  29.8  54.3  31.1  20.1
+  19.1  42.2  30.9  12.9
+  25.6  53.9  23.7  21.7
+  31.4  58.5  27.6  27.1
+  27.9  52.1  30.6  25.4
+  22.1  49.9  23.2  21.3
+  25.5  53.5  24.8  19.3
+  31.1  56.6  30.0  25.4
+  30.4  56.7  28.3  27.2
+  18.7  46.5  23.0  11.7
+  19.7  44.2  28.6  17.8
+  14.6  42.7  21.3  12.8
+  29.5  54.4  30.1  23.9
+  27.7  55.3  25.7  22.6
+  30.2  58.6  24.6  25.4
+  22.7  48.2  27.1  14.8
+  25.2  51.0  27.5  21.1
+;
+run;
+* Gives diagnostic plots and outputs values to bodyfat_out;
+ods graphics on;
+proc reg data = bodyfat outest=outest_bodyfat edf
+plots=(diagnostics(stats=none) RStudentByLeverage(label) 
+              CooksD(label) Residuals(smooth)
+              DFFITS(label) DFBETAS ObservedByPredicted(label));
+  model bodyfat=triceps thigh/ influence partial vif;
+  output out=bodyfat_out cookd=cookd dffits=dffits p=yhat h=leverage r=residual rstudent=ext_student student=int_student;
+run;
+quit;
+ods graphics off;
+*Bonferroni and step-down Bonferroni adjustment of Studentized residual p-values;
+data _null_;
+ set outest_bodyfat;
+ call symput('dfe',_EDF_);
+run;
+data bodyfat_out;
+ set bodyfat_out;
+ p_val=2*(1-probt(abs(ext_student),&dfe));
+run;
+proc multtest inpvalues(p_val)=bodyfat_out out=multtest_out stepbon bon;
+run;
+proc print data=bodyfat_out;
+run;
+* The proportional influence plot on p. 404;
+* Except THERE, it seems the diameter is proportional to Cook's distance;
+title 'Proportional Influence Plot';
+title2 "Points proportional in area to Cook's distance";
+ODS GRAPHICS / IMAGEMAP=ON;* Needed to get interactive "tip" information on graph;
+proc sgplot data=bodyfat_out;
+  bubble y=residual x=yhat size=cookd/tip=(yhat residual cookd);
+run;
+ODS GRAPHICS / IMAGEMAP=OFF;
+title '';
+/*
+axis1 order=(10 to 30 by 5);
+axis2 order=(-4.5 to 4.5 by 1.5) label = (angle=90 h=1 color=black 'Studentized Resid' );
+proc gplot data=bodyfat_out;
+  bubble residual*yhat=cookd /haxis=axis1 vaxis=axis2  bsize=10 hminor=0 vminor=0 vref=0 bsize=4;
+  label residual='Residual';
+  label yhat='Yhat';
+run;
+quit;
+goptions reset=all;
+*/
+* To get VIF for model with three predictors;
+proc reg data = bodyfat; 
+  model bodyfat=triceps thigh midarm/vif;
+run;
+quit;

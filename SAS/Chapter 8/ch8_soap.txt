@@ -1,0 +1,87 @@
+data soap;
+  input y x1 x2;
+  ix2=2-x2;* For identification on graphs;
+  x1x2=x1*x2;
+  label  y = 'Scrap'
+        x1 = 'Speed'
+	    ix2 = 'Production line';
+cards;
+  218  100  1
+  248  125  1
+  360  220  1
+  351  205  1
+  470  300  1
+  394  255  1
+  332  225  1
+  321  175  1
+  410  270  1
+  260  170  1
+  241  155  1
+  331  190  1
+  275  140  1
+  425  290  1
+  367  265  1
+  140  105  0
+  277  215  0
+  384  270  0
+  341  255  0
+  215  175  0
+  180  135  0
+  260  200  0
+  361  275  0
+  252  155  0
+  422  320  0
+  273  190  0
+  410  295  0
+;
+run;
+title 'KNN Figure 8.16';
+proc sgplot data=soap;
+ scatter y=y x=x1/group=ix2;
+ xaxis label='Line Speed (coded)';
+ yaxis label='Amount of Scrap (coded)';
+run;
+title ' ';
+proc reg data = soap;
+  model y = x1 x2 x1x2/ ss1 clb;
+  output out=temp p=yhat r=residual;
+  test: test x2=x1x2=0;
+run;
+quit;
+* Plot of regression lines;
+data soap1;
+  set soap;
+  if x2 = 0 then do;
+  z1 = x1;
+  y1 = y;
+  end;
+  if x2= 1 then do;
+  z2 = x1 ;
+  y2 = y;
+  end;
+run;
+proc reg data = soap1;
+  model y = x1 x2 x1x2 ;
+  output out = temp2 p = p;
+run;
+quit;
+data temp2;
+ set temp2;
+ p1=p;
+ if x2=1 then p1=.;
+ p2=p;
+ if x2=0 then p2=.;
+ label  y1 = 'Amount, Line 2'
+        y2 = 'Amount, Line 1'
+	    p1='Fitted Amount, Line 2'
+	    p2='Fitted Amount, Line 1';
+run;
+
+proc sgplot data=temp2;
+ scatter y=y1 x=z1/MARKERATTRS=(color=red symbol=Circle);
+ scatter y=y2 x=z2/MARKERATTRS=(color=blue symbol=CircleFilled);
+ series y=p1 x=z1/lineattrs= (color=red);
+ series y=p2 x=z2/lineattrs= (color=blue);
+ xaxis label='Line Speed (coded)';
+ yaxis label='Amount of Scrap (coded)';
+run;

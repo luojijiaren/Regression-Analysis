@@ -1,0 +1,248 @@
+/* Dwaine data, p. 236 text. We input original data
+   and two additional sets of regressor values for
+   estimation and prediction.
+*/
+data dwaine;
+  input targtpop dispoinc sales;
+  x1x2=targtpop*dispoinc;
+cards;
+  68.5  16.7  174.4
+  45.2  16.8  164.4
+  91.3  18.2  244.2
+  47.8  16.3  154.6
+  46.9  17.3  181.6
+  66.1  18.2  207.5
+  49.5  15.9  152.8
+  52.0  17.2  163.2
+  48.9  16.6  145.4
+  38.4  16.0  137.2
+  87.9  18.3  241.9
+  72.8  17.1  191.1
+  88.4  17.4  232.0
+  42.9  15.8  145.3
+  52.5  17.8  161.1
+  85.7  18.4  209.7
+  41.3  16.5  146.4
+  51.7  16.3  144.0
+  89.6  18.1  232.6
+  82.7  19.1  224.1
+  52.3  16.0  166.5
+  65.4  17.6    .  
+  53.1  17.7    .  
+  ;
+run;
+/* 
+Let's do some multivariable visualization.
+First, a scatterplot matrix:
+*/
+proc sgscatter data=dwaine;
+matrix targtpop dispoinc sales;
+run;
+/*
+Now some coplots:
+*/
+%macro coplot3(data,x,y,panelvar);
+proc univariate data=&data noprint;
+ var &panelvar;
+ output out=Pctls pctlpts=33 67 pctlpre=P_ 
+                 pctlname=P33 P67;
+run;
+proc print;run;
+data _null_;
+ set Pctls;
+ call symput('P33',left(put(P_P33,best10.)));
+ call symput('P67',left(put(P_P67,best10.)));
+run;
+data z_coplot;
+ set &data;
+ pctile='  0_33';
+ if &panelvar>&P33 then pctile=' 33_67';
+ if &panelvar>&P67 then pctile='67_100';
+run;
+title Coplot of 'x Variable' &x ', y Variable' &y ', Grouped by' &panelvar 'Percentiles';
+proc sgpanel data=z_coplot;
+ panelby pctile/rows=1 columns=3;
+ scatter x=&x y=&y;
+run;
+title Coplot with Loess of 'x Variable' &x ', y Variable' &y ', Grouped by' &panelvar 'Percentiles';
+proc sgpanel data=z_coplot;
+ panelby pctile/rows=1 columns=3;
+ loess x=&x y=&y;
+run;
+title ' ';
+%mend coplot3;
+%coplot3(dwaine,targtpop,sales,dispoinc);
+%coplot3(dwaine,dispoinc,sales,targtpop);
+/*
+And finally, a 3d plot:
+*/
+%macro plot3d(data,x,y,z,xlo,xup,xdel,ylo,yup,ydel);
+/* Does 3 rotated 3d plots.
+INPUT: data set, x, y and z coordinates
+lower and upper limits and spacing for plotting grid.
+*/
+proc g3grid data=&data out=zzzgrid;
+  grid &x*&y=&z/ 
+    axis1=&xlo to &xup by &xdel
+    axis2=&ylo to &yup by &ydel;
+run;
+proc g3d data=zzzgrid;
+  plot &x*&y=&z;
+run;
+proc g3d data=zzzgrid;
+  plot &x*&y=&z/rotate=45;
+run;
+proc g3d data=zzzgrid;
+  plot &x*&y=&z/rotate=90;
+run;
+proc g3d data=zzzgrid;
+  plot &x*&y=&z/rotate=135;
+run;
+proc g3d data=zzzgrid;
+  plot &x*&y=&z/rotate=180;
+run;
+%mend plot3d;
+
+%plot3d(dwaine,targtpop,dispoinc,sales,30,100,.1,15,20,.1);
+
+/* Looking at correlations among variables */
+proc corr data = dwaine;
+run;
+/* A basic regression fit: first-order model*/
+proc reg data = dwaine;
+  model sales=targtpop dispoinc/ i;*option i displays inverse of X'X matrix;
+  output out=outfig05 p = fitted r = residual;
+run;
+quit;
+proc print data = outfig05;
+  var sales targtpop dispoinc fitted residual;
+run;
+/* A plot to look for signs of interaction*/
+proc sgplot data = outfig05; 
+ scatter x=x1x2  y=residual;
+run;
+/* Sometimes a comparative plot can help*/
+proc sgscatter data=outfig05;
+compare x=(fitted sales targtpop x1x2) y=residual;
+run;
+/* Plotting the absolute values of the residuals versus the fitted values */  
+data outfig08;
+  set outfig05;
+  absresid = abs(residual);
+run;
+proc sgplot data=outfig08;
+ scatter x=fitted y=absresid;
+run; 
+proc univariate data = outfig05 normal; * Option normal provides tests of normality;
+  var residual;
+run;
+/*
+Run macro tqplot to plot Studentized residuals versus t quantiles.
+*/
+%tqplot(dwaine,sales,y,targtpop dispoinc,targtpop dispoinc,tqplot_out);
+/*
+Test for heteroscedasticity using the White and Breusch-Pagan tests.
+In SAS 9.4 or SAS Studio, can use proc model as follows:
+*/
+proc model data = dwaine;
+ parms beta0 beta1 beta2;
+ sales=beta0+beta1*targtpop+beta2*dispoinc;
+ fit sales/white breusch=(1 targtpop dispoinc);
+run;
+quit;
+/*
+The following code will work in SAS UE:
+*/
+data temp1;
+ set outfig05;
+ resid_sq=residual**2;
+ t2=targtpop**2;
+ d2=dispoinc**2;
+run;
+ods output nobs=nobs FitStatistics=out_f anova=anova; 
+proc reg data = temp1  outest=zzzout edf;
+  model resid_sq=targtpop dispoinc x1x2 t2 d2;
+run;
+quit;
+data nobs;
+ set nobs;
+ n=NObsUsed;
+ if _n_=1;
+ keep n;
+run;
+data anova;
+ set anova;
+ if _n_=1;
+ keep df;
+run;
+data out_f;
+ set out_f;
+ if _n_=1;
+ r2=cvalue2;
+ keep r2;
+run;
+data white;
+ merge nobs out_f anova;
+ name='White test:';
+ lm=n*r2;
+ p_val=1-CDF('CHISQUARE',lm,df);
+run;
+
+/*
+and now the Breusch-Pagan test: 
+*/
+ods output nobs=nobs FitStatistics=out_f anova=anova; 
+proc reg data = temp1  outest=zzzout edf;
+  model resid_sq=targtpop dispoinc;
+run;
+quit;
+data nobs;
+ set nobs;
+ n=NObsUsed;
+ if _n_=1;
+ keep n;
+run;
+data anova;
+ set anova;
+ if _n_=1;
+ keep df;
+run;
+data out_f;
+ set out_f;
+ if _n_=1;
+ r2=cvalue2;
+ keep r2;
+run;
+data b_p;
+ merge nobs out_f anova;
+ lm=n*r2;
+ p_val=1-CDF('CHISQUARE',lm,df);
+ name='Breusch-Pagan test';
+run;
+data both;
+ set white b_p;
+run;
+title 'White and Breusch-Pagan tests for heteroscedasticity';
+proc print noobs;
+ var name lm df p_val;
+run;
+title ' ';
+/*
+Get some confidence and prediciton limits
+*/
+proc reg data = dwaine;
+  model sales=targtpop dispoinc / r cli clm clb; * Options r-> residual analysis, 
+                                                 * cli->prediction intervals,
+                                                 * clm->confidence intervals for mean response
+                                                 * clb->confidence intervals for parameter estimates;
+  ods output OutputStatistics=temp;
+run;
+quit;
+/* Print results for two regressor values not in data set*/
+proc print data = temp;
+  where Observation >= 22;
+run;
+/*For another tool to get a scatterplot matrix (and other plots), submit the command (available only in SAS 9.4):
+%sgdesign;
+*/
+

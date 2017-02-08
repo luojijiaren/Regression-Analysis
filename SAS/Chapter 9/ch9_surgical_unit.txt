@@ -1,0 +1,21 @@
+ods graphics on; *Needed only to get high quality graphs in SAS 9.4;
+proc reg data=ma542.surgical_unit plot=CriterionPanel;
+ model yprime=x1-x4/selection=rsquare;
+ model yprime=x1-x4/selection=adjrsq;
+ model yprime=x1-x4/selection=cp;
+ model yprime=x1-x4/selection=stepwise;
+run;
+quit;
+proc glmselect data=ma542.surgical_unit plot=CriterionPanel;
+ model yprime=x1-x4/selection=lasso(choose=cp);
+proc glmselect data=sasdata.ma542_surgical_unit plot=CriterionPanel;
+ model yprime=x1-x4/selection=lar(choose=cp);
+run;
+ods graphics off;
+* To get PRESS residuals;
+proc reg data=ma542.surgical_unit plot=CriterionPanel;
+ model yprime=x1-x3;
+ output out=su_out press=press;
+run;
+quit;
+

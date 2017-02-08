@@ -1,0 +1,138 @@
+*Basic plots of lotsize. Gives Figure 3.1;
+proc univariate plots data = ma542.toluca;
+ var lotsize;
+run;
+* Sequence plot;
+data temp;
+  set ma542.toluca;
+  run = _n_;
+run; 
+proc sgplot data = temp;
+  series y=lotsize x=run;
+run;
+/*
+Fit the regression and plot residuals. Automatically gives some of Figure 3.2.
+residual outputs ordinary residuals, student outputs internally Studentized residuals,
+rstudent outputs externally Studentized residuals, edf outputs number of regressors,
+error df and model r-sqaured to output data set.
+*/
+proc reg data = temp outest=zzzout edf;
+  model workhours=lotsize;
+  output out=temp1 residual=resid student=istudres rstudent=estudres p=fitted;
+run;
+quit;
+/*
+Getting the rest of Figure 3.2:
+*/
+proc sgplot data=temp1 ;
+  hbox resid;
+run;
+data temp1;
+  set temp1;
+  run = _n_;
+run; 
+proc sgplot data = temp1;
+  series y=resid x=run;
+run;
+/*
+*The next chunk of code is to get a q-q plot of estudres versus the t(n-3) distribution.
+It uses the macro tqplot.
+%tqplot(ma542.toluca,workhours,y,lotsize,lotsize,tqplot_out);
+/*
+Shapiro-Wilk test for normality of residuals is produced here:
+*/
+proc univariate data=temp1 normal;
+ var resid;
+run;
+/*
+And the White and modified Breusch-Pagan test for heteroscedasticity here
+(does not work in SAS UE):
+*/
+proc model data = ma542.toluca;
+ parms beta0 beta1;
+ workhours=beta0+beta1*lotsize;
+ fit workhours/white breusch=(1 lotsize);
+run;
+quit;
+/*
+Here is code to run the White and Breusch-Pagan tests that will work in SAS UE.
+First the White test:
+*/
+data temp1;
+ set temp1;
+ resid_sq=resid**2;
+ l2=lotsize**2;
+run;
+/*
+"ods" stands for "output delivery system". It tells SAS where (and whether)
+to deliver its output. Here it delivers the number of observations, nobs,
+to a SAS data file called nobs and anova statistics to one called anova
+*/
+ods output nobs=nobs FitStatistics=out_f anova=anova; 
+proc reg data = temp1  outest=zzzout edf;
+  model resid_sq=lotsize l2;
+run;
+quit;
+data nobs;
+ set nobs;
+ n=NObsUsed;
+ if _n_=1;
+ keep n;
+run;
+data anova;
+ set anova;
+ if _n_=1;
+ keep df;
+run;
+data out_f;
+ set out_f;
+ if _n_=1;
+ r2=cvalue2;
+ keep r2;
+run;
+data white;
+ merge nobs out_f anova;
+ name='White test:';
+ lm=n*r2;
+ p_val=1-CDF('CHISQUARE',lm,df);
+run;
+
+/*
+and now the Breusch-Pagan test: 
+*/
+ods output nobs=nobs FitStatistics=out_f anova=anova; 
+proc reg data = temp1  outest=zzzout edf;
+  model resid_sq=lotsize;
+run;
+quit;
+data nobs;
+ set nobs;
+ n=NObsUsed;
+ if _n_=1;
+ keep n;
+run;
+data anova;
+ set anova;
+ if _n_=1;
+ keep df;
+run;
+data out_f;
+ set out_f;
+ if _n_=1;
+ r2=cvalue2;
+ keep r2;
+run;
+data b_p;
+ merge nobs out_f anova;
+ lm=n*r2;
+ p_val=1-CDF('CHISQUARE',lm,df);
+ name='Breusch-Pagan test';
+run;
+data both;
+ set white b_p;
+run;
+title 'White and Breusch-Pagan tests for heteroscedasticity';
+proc print noobs;
+ var name lm df p_val;
+run;
+title ' ';

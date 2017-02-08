@@ -1,0 +1,47 @@
+data patients;
+ input y x;
+ label y='Days Hospitalized'
+       x='Prognsotic Index';
+cards;
+  54   2
+  50   5
+  45   7
+  37  10
+  35  14
+  25  19
+  20  26
+  16  31
+  18  34
+  13  38
+   8  45
+  11  52
+   8  53
+   4  60
+   6  65
+   ;
+run;
+* y x resampling;
+proc nlin data=patients;
+ parms g0=56.6646 g1=-.03797;
+ model.y=g0*exp(g1*x);
+run;
+proc surveyselect data=patients method=urs out=boot_samps noprint reps=1000 sampsize=15 outhits;
+run;
+options nonotes;
+proc nlin data=boot_samps outest=bootdr_est noprint;
+ parms g0=56.6646 g1=-.03797;
+ model.y=g0*exp(g1*x);
+ by replicate;
+run;
+options notes;
+data bootdr_est;
+ set bootdr_est;
+ if _TYPE_='FINAL';
+run;
+proc univariate data=bootdr_est;
+ ods select Histogram GoodnessOfFit QQPlot BasicMeasures TestsForNormality;
+ var g0 g1;
+ histogram g0 g1/normal(mu=est sigma=est);
+ qqplot g0 g1/normal(mu=est sigma=est);
+run;
+

@@ -1,0 +1,50 @@
+data coupons;
+  input x n r p;
+  label x = 'Reduction'
+        n = 'no.  households'
+	r = 'coupons redeemed'
+	p = 'proportion of coupons redeemed';
+cards;
+   5  200   30  .150
+  10  200   55  .275
+  15  200   70  .350
+  20  200  100  .500
+  30  200  137  .685
+;
+run;
+proc genmod data=coupons;
+  model r/n = x / dist = bin link = logit lrci;
+  output out=temp p=predicted;
+  ods output ParameterEstimates=pe;
+run;
+* To get estimates for OR;
+data pe;
+ set pe;
+ or=exp(estimate);
+ or_lo=exp(lowerLRCL);
+ or_up=exp(upperLRCL);
+ if Parameter='x';
+ keep or or_lo or_up;
+run;
+proc print;run;
+* For plotting;
+data extra;
+  if _n_ = 1 then do;
+  predicted = exp(-2.04435) / (1+ exp(-2.04435) ); 
+  x=0; output;
+  predicted = exp(-2.04435 + 0.096834*40) / (1+ exp(-2.04435 + 0.096834*40) ); 
+  x=40; output;
+  end;
+  set temp;
+  output;
+run;
+proc sort data = extra;
+ by x;
+run;
+title 'Data and Fitted Logistic Function';
+proc sgplot data=extra;
+ scatter y=p x=x;
+ series y=predicted x=x;
+run;
+title '';
+
