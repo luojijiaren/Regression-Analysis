@@ -1,0 +1,8 @@
+read.table('CH01PR22.txt')
+data=read.table('CH01PR22.txt')
+attach(data)
+lm.fit=lm(V1~V2)
+summary(lm.fit)
+res=resid(lm.fit)
+yhat=predict(lm.fit)
+plot(yhat,res)
