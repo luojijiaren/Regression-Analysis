@@ -4,5 +4,7 @@ attach(data)
 lm.fit=lm(V1~V2)
 summary(lm.fit)
 res=resid(lm.fit)
+boxplot(res)
+
 yhat=predict(lm.fit)
 plot(yhat,res)
