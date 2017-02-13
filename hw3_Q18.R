@@ -1,0 +1,15 @@
+data=read.table('CH03PR18.txt')
+attach(data)
+lm.fit=lm(V1~V2)
+summary(lm.fit)
+plot(V2,V1)
+abline(lm.fit,col='red')
+
+X=sqrt(V2)
+lm.fit2=lm(V1~X)
+summary(lm.fit2)
+plot(X,V1)
+abline(lm.fit2,col='red')
+
+par(mfrow=c(2,2))
+plot(lm.fit2)
