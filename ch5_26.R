@@ -13,10 +13,11 @@ round(H,3)
 
 e=V1-yhat
 SSE=t(e)%*%e
-MSE=SSE/length(V2)
+MSE=SSE/13
 MSE
-sb_sq=0.195*Xmul
+sb_sq=0.225*Xmul
 sb_sq
-spred_sq=0.195*(1+30*Xmul*30)
+Xh=rbind(1,30)
+spred_sq=0.225*(1+t(Xh)%*%Xmul%*%Xh)
 spred_sq
 
