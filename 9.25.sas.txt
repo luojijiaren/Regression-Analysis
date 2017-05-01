@@ -1,5 +1,6 @@
 data SENIC;
  input ID yprime x1 x2 x3 x4 x5 x6 x7 x8 x9 x10;
+logy=log10(y);
 cards;
    57   7.14  59.0  3.7   2.6   75.8   70  2  4   37   35  31.4
    58   7.65  47.1  4.3  16.4   65.7  318  2  4  265  314  51.4
@@ -74,7 +75,7 @@ run;
 
 ods graphics on; *Needed only to get high quality graphs in SAS 9.4;
 proc reg data=SENIC plot=CriterionPanel;
- model yprime=x1-x10/selection=cp;
+ model yprime=x1-x5 x8 x9 x10/selection=cp;
 run;
 
 
