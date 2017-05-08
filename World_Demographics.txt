@@ -1,0 +1,234 @@
+country                                        x1  y     x2   x3   x4   x5    set
+
+Afghanistan                                   18.6 13.7 8.6  38.3 .    2.2  Training
+Albania                                       32.5 6.7  6    13.1 3.3  21.3 Training
+Algeria                                       27.8 4.3  5.2  23   4.3  16   Training
+American Samoa                                29.4 4.8  .    22.9 .    74.6 Training
+Andorra                                       43.7 7.1  8.3  7.8  .    25.2 Training
+Angola                                        18.2 11.3 3.5  38.6 3.5  6.4  Training
+Antigua and Barbuda                           31.6 5.7  5.2  15.8 2.4  25.6 Training
+Armenia                                       34.6 9.4  4.5  13.3 3.3  24   Training
+Aruba                                         39.1 8.3  .    12.5 6    .    Training
+Australia                                     38.6 7.2  9.1  12.1 5.6  26.8 Training
+Azerbaijan                                    30.9 7.1  5.4  16.2 2.4  23.8 Training
+Bahamas, The                                  31.8 7.1  7.5  15.4 .    34.7 Training
+Bahrain                                       32.1 2.7  3.9  13.5 2.6  32.9 Training
+Bangladesh                                    26.3 5.3  3.6  19   2.2  1.1  Training
+Barbados                                      38.3 8.5  6.3  11.8 5.6  34.7 Training
+Belarus                                       39.8 13.3 5    10.5 5.1  24.3 Training
+Belgium                                       41.4 9.7  10.8 11.4 6.6  22.1 Training
+Belize                                        22.4 6    5.8  24.3 6.6  33.7 Training
+Bermuda                                       43.2 8.4  .    11.3 2.6  .    Training
+Bhutan                                        27.2 6.6  3.8  17.5 4.7  5.3  Training
+Botswana                                      23.2 13.3 5.3  20.7 9.5  11.2 Training
+Brazil                                        31.6 6.6  9.3  14.3 5.8  18.8 Training
+British Virgin Islands                        36.2 5.1  .    11   4.4  .    Training
+Brunei                                        29.9 3.6  2.3  17.2 3.5  7.5  Training
+Bulgaria                                      42.4 14.5 7.4  8.8  4.1  23.7 Training
+Burkina Faso                                  17.2 11.5 6.2  41.6 3.4  2.3  Training
+Burma                                         28.6 7.9  1.8  18.2 0.8  4    Training
+Burundi                                       17   9    8.1  41.7 5.8  2.9  Training
+Cabo Verde                                    24.9 6.1  3.9  20.2 5    10   Training
+Cambodia                                      24.9 7.6  5.4  23.4 2.6  2.1  Training
+Cameroon                                      18.5 9.8  5.1  35.8 3.2  10.3 Training
+Canada                                        42   8.5  10.9 10.3 5.4  26.2 Training
+Cayman Islands                                39.9 5.7  .    12.1 .    .    Training
+Central African Republic                      19.6 13.5 3.8  34.7 1.2  3.5  Training
+Chad                                          17.6 14   3.5  36.1 2.3  2.7  Training
+Chile                                         34   6.1  7.2  13.7 4.5  29.4 Training
+China                                         37.1 7.7  5.4  12.4 .    5.7  Training
+Colombia                                      29.6 5.4  6.8  16.3 4.4  17.3 Training
+Comoros                                       19.6 7.4  4.5  26.9 7.6  4.4  Training
+Congo, Democratic Republic of the             18.4 9.9  5.6  34.2 2.5  1.7  Training
+Cook Islands                                  35.9 8.3  3.4  14.1 3.1  63.7 Training
+Costa Rica                                    30.9 4.6  10.1 15.7 6.3  23.7 Training
+Cote d'Ivoire                                 20.7 9.5  7.1  28.2 4.6  6.2  Training
+Croatia                                       42.7 12.1 6.8  9    4.3  24.2 Training
+Cuba                                          41.1 8.6  8.6  10.8 12.8 21.5 Training
+Curacao                                       36   8.3  .    13.8 .    .    Training
+Czechia                                       41.7 10.4 7.7  9.5  4.2  32.7 Training
+Denmark                                       42   10.3 11.2 10.4 8.7  18.2 Training
+Dominica                                      33   7.9  5.9  15.2 3.5  24.9 Training
+Dominican Republic                            27.8 4.6  5.4  18.6 2.2  21.2 Training
+Egypt                                         23.8 4.7  5    30.3 3.8  33.1 Training
+Eritrea                                       19.4 7.3  2.6  30.1 2.1  1.5  Training
+Estonia                                       42.4 12.5 5.9  10.3 5.7  20.6 Training
+Ethiopia                                      17.8 7.9  3.8  36.9 4.7  1.1  Training
+European Union                                42.7 .    .    .    .    .    Training
+Falkland Islands (Islas Malvinas)             .    4.9  .    10.9 .    .    Training
+Fiji                                          28.6 6.1  4    19   4.2  30.6 Training
+Finland                                       42.4 9.9  9.1  10.7 6.8  23   Training
+France                                        41.2 9.3  11.7 12.3 5.9  18.2 Training
+French Polynesia                              31.5 5.1  .    15   .    .    Training
+Gabon                                         18.6 13.1 3.5  34.3 .    13.9 Training
+Gambia, The                                   20.7 7.1  5    30.1 4.1  7.9  Training
+Gaza Strip                                    16.9 3.2  .    32.3 .    .    Training
+Georgia                                       38   10.9 9.2  12.5 2    22.1 Training
+Gibraltar                                     34.5 8.4  .    14.1 .    .    Training
+Greece                                        44.2 11.2 9.3  8.5  4.1  20.1 Training
+Greenland                                     33.8 8.6  .    14.4 .    .    Training
+Grenada                                       30.9 8.1  6.4  15.8 3.9  22.5 Training
+Guatemala                                     21.7 4.7  6.7  24.5 3    19.2 Training
+Guernsey                                      43.6 8.9  .    9.8  .    .    Training
+Guinea-Bissau                                 20   14.1 5.9  32.9 .    4.9  Training
+Haiti                                         22.6 7.7  6.4  23.3 .    7.9  Training
+Hong Kong                                     44   7.2  .    9.1  3.5  .    Training
+Hungary                                       41.8 12.8 7.8  9.1  4.9  27.6 Training
+Iceland                                       36.3 6.3  9.1  13.8 7.6  23.2 Training
+India                                         27.6 7.3  4    19.3 3.2  1.9  Training
+Iran                                          29.4 5.9  6.7  17.8 3.7  19.4 Training
+Iraq                                          19.9 3.8  3.6  30.9 .    27   Training
+Ireland                                       36.4 6.5  8.1  14.5 6.4  25.2 Training
+Israel                                        29.7 5.2  7.5  18.3 5.6  26.2 Training
+Italy                                         45.1 10.3 9.2  8.7  4.5  19.8 Training
+Jamaica                                       25.6 6.7  5.9  18   6.1  24.1 Training
+Japan                                         46.9 9.6  10.1 7.8  3.8  5    Training
+Jersey                                        38.5 7.7  .    12.1 .    .    Training
+Kazakhstan                                    30.3 8.2  4.2  18.7 3.1  23.7 Training
+Kenya                                         19.5 6.8  4.7  25.1 6.7  4.2  Training
+Kuwait                                        29.2 2.2  2.5  19.6 3.8  42   Training
+Kyrgyzstan                                    26.2 6.6  7.1  22.6 6.8  15.5 Training
+Laos                                          22.7 7.5  2.9  23.9 2.8  2.6  Training
+Latvia                                        43.3 14.4 6    9.9  5    24.9 Training
+Lebanon                                       29.9 4.9  7.3  14.4 2.2  27.4 Training
+Lesotho                                       24   14.9 11.6 25.1 13   14.6 Training
+Liberia                                       18.3 9.5  15.5 33.9 2.8  4.8  Training
+Libya                                         28.5 3.6  3.9  17.8 .    27.8 Training
+Liechtenstein                                 42.9 7.3  .    10.4 2.1  .    Training
+Lithuania                                     43.4 14.5 6.7  10   5.4  27.6 Training
+Luxembourg                                    39.2 7.3  6.9  11.4 3.7  26   Training
+Macau                                         38.7 4.4  .    8.8  2.7  .    Training
+Macedonia                                     37.5 9.1  7.1  11.5 .    21.1 Training
+Madagascar                                    19.5 6.7  4.1  32.1 2.7  1.6  Training
+Malawi                                        16.5 8.1  9.2  41.3 5.4  4.3  Training
+Malaysia                                      28.2 5.1  4    19.4 5.9  14   Training
+Maldives                                      27.8 3.9  8.5  16   6.8  12.9 Training
+Mali                                          16.2 12.6 5.8  44.4 4.8  4.3  Training
+Malta                                         41.5 9.2  9.1  10.1 6.9  28.8 Training
+Marshall Islands                              22.7 4.2  15.6 25   12.2 45.4 Training
+Mauritania                                    20.3 8.1  6.4  30.9 3.7  12.7 Training
+Mexico                                        28   5.3  6.1  18.5 5.1  32.1 Training
+Micronesia, Federated States of               24.7 4.2  12.8 20.3 .    40.6 Training
+Moldova                                       36.3 12.6 11.7 11.8 8.4  21.2 Training
+Monaco                                        52.4 9.6  4.4  6.6  1.6  .    Training
+Mongolia                                      27.9 6.3  6.3  19.6 5.5  14.4 Training
+Montserrat                                    32.6 6.3  .    11   .    .    Training
+Morocco                                       28.9 4.8  6.4  18   5.4  16.4 Training
+Mozambique                                    17.1 11.9 6.4  38.3 5    4.9  Training
+Namibia                                       21   8.1  8.3  27.9 8.4  9.5  Training
+Nauru                                         26.1 5.9  7.5  24.4 .    71.1 Training
+Nepal                                         23.6 5.7  5.5  19.9 4.7  1.4  Training
+Netherlands                                   42.5 8.8  12.4 10.9 5.9  18.8 Training
+New Zealand                                   37.8 7.4  10.3 13.3 7.4  28.3 Training
+Nicaragua                                     25.2 5.1  8.2  17.9 4.6  22.2 Training
+Nigeria                                       18.3 12.7 6.1  37.3 .    6.5  Training
+Niue                                          .    .    6.7  .    .    .    Training
+Pakistan                                      23.4 6.4  2.7  22.3 2.1  5.5  Training
+Palau                                         33.3 8    9.5  11.2 7.3  48.9 Training
+Panama                                        28.9 4.9  7.6  18.1 3.5  25.4 Training
+Papua New Guinea                              22.9 6.5  5.2  24   .    16.2 Training
+Peru                                          27.7 6    5.1  18   2.8  15.7 Training
+Philippines                                   23.4 6.1  4.6  24   2.7  6.3  Training
+Poland                                        40.3 10.3 6.7  9.6  5.2  25.3 Training
+Portugal                                      41.8 11.1 9.4  9.1  5.6  24   Training
+Puerto Rico                                   39.5 8.8  .    10.8 .    .    Training
+Qatar                                         33   1.5  2.2  9.7  2.5  33.2 Training
+Romania                                       40.7 11.9 5.1  9    4.2  19.1 Training
+Rwanda                                        19   8.8  10.7 33.3 5.1  4.3  Training
+Saint Barthelemy                              43.6 .    .    .    .    .    Training
+Saint Helena, Ascension, and Tristan da Cunha 41.5 7.7  .    9.7  .    .    Training
+Saint Kitts and Nevis                         34.5 7.1  5.9  13.3 4.2  40.7 Training
+Saint Lucia                                   34.2 7.6  8.5  13.5 4.1  21.4 Training
+Saint Martin                                  32.3 .    .    .    .    .    Training
+Saint Vincent and the Grenadines              33   7.3  5.2  13.4 5.1  23.4 Training
+San Marino                                    44.2 8.6  6.5  8.6  .    .    Training
+Saudi Arabia                                  27.2 3.3  3.2  18.4 5.1  33   Training
+Serbia                                        42.3 13.6 10.5 9    4.8  24.8 Training
+Seychelles                                    34.9 6.9  4.7  13.9 3.6  23.9 Training
+Sierra Leone                                  19   10.6 15.1 36.7 2.9  6.8  Training
+Singapore                                     34.3 3.5  4.7  8.4  3    7.1  Training
+Sint Maarten                                  40.7 5    .    13.1 .    .    Training
+Slovenia                                      44.1 11.5 8.8  8.3  5.7  28.6 Training
+Solomon Islands                               22.2 3.8  8    25.3 7.3  30   Training
+Somalia                                       17.9 13.3 .    40   .    4.8  Training
+South Africa                                  26.8 9.6  8.8  20.5 6    31.3 Training
+South Sudan                                   17.1 8    2.6  36.2 .    .    Training
+Spain                                         42.3 9.1  9.6  9.4  5    26.6 Training
+Sri Lanka                                     32.5 6.2  3.3  15.5 1.7  5.1  Training
+Suriname                                      29.5 6.1  5.9  16   .    25.1 Training
+Sweden                                        41.2 9.4  9.6  12   7    18.6 Training
+Syria                                         24.1 4    3.4  21.7 5.1  27.1 Training
+Taiwan                                        40.2 7.3  .    8.4  .    .    Training
+Thailand                                      37.2 7.9  3.9  11.1 5.8  8.8  Training
+Timor-Leste                                   18.8 6    4.3  33.8 9.4  2.7  Training
+Tokelau                                       .    .    .    .    .    63.4 Training
+Tonga                                         22.6 4.9  5.4  22.6 3.9  57.6 Training
+Trinidad and Tobago                           35.5 8.7  5.4  13.1 3.2  29.3 Training
+Tunisia                                       32.4 6    7    16.4 6.2  22.3 Training
+Turkey                                        30.5 5.9  6.3  16   2.9  27.8 Training
+Turkmenistan                                  27.5 6.1  2    19.3 .    13.2 Training
+Turks and Caicos Islands                      32.9 3.2  .    15.7 .    .    Training
+Tuvalu                                        25.5 8.6  15.4 23.8 .    .    Training
+Ukraine                                       40.4 14.4 7.6  10.5 6.2  21.3 Training
+United Kingdom                                40.5 9.4  9.4  12.1 6.2  26.9 Training
+United States                                 37.9 8.2  17.9 12.5 5.4  33   Training
+Uzbekistan                                    28.1 5.3  5.9  16.9 .    15.1 Training
+Vanuatu                                       21.7 4.1  3.6  24.5 5    27.5 Training
+Venezuela                                     28   5.2  4.6  19.2 6.9  30.3 Training
+Vietnam                                       30.1 5.9  6.6  15.7 6.3  1.7  Training
+Wallis and Futuna                             31.6 5.2  .    13.3 .    .    Training
+West Bank                                     20.8 3.5  .    26.7 .    .    Training
+Western Sahara                                21.1 8.2  .    29.8 .    .    Training
+Yemen                                         19.2 6.1  5.5  29.2 5.2  14.5 Training
+Zambia                                        16.7 12.4 6.5  41.8 1.3  3.6  Training
+Zimbabwe                                      20.6 9.9  .    31.9 2.5  7    Training
+Anguilla                                      34.6 4.6  .    12.7 2.8  .    Validation
+Argentina                                     31.5 7.5  8.5  17   6.3  29.7 Validation
+Austria                                       43.8 9.5  11.5 9.5  5.9  20.9 Validation
+Benin                                         18   8    4.5  35.5 5.3  6    Validation
+Bolivia                                       24   6.5  5.8  22.4 6.9  17.9 Validation
+Bosnia and Herzegovina                        41.7 9.9  9.9  8.8  .    26.5 Validation
+Congo, Republic of the                        19.7 9.7  3.2  35.1 6.2  4.7  Validation
+Cyprus                                        36.4 6.7  7.3  11.4 7.3  25.5 Validation
+Djibouti                                      23.5 7.6  8.8  23.6 8.4  9.4  Validation
+Ecuador                                       27.4 5.1  6.4  18.2 4.4  21.4 Validation
+El Salvador                                   26.6 5.7  6.7  16.3 3.4  25.8 Validation
+Equatorial Guinea                             19.6 8    4.7  32.8 0.6  10.6 Validation
+Faroe Islands                                 37.7 8.7  .    14   .    .    Validation
+Germany                                       46.8 11.6 11.3 8.5  5.1  25.1 Validation
+Ghana                                         21   7.1  5.2  30.8 8.1  7.5  Validation
+Guam                                          30.4 5.2  .    16.7 .    .    Validation
+Guinea                                        18.8 9.2  6.3  35.4 2.5  4.4  Validation
+Guyana                                        25.8 7.4  6.6  15.5 3.2  17.2 Validation
+Honduras                                      22.6 5.2  8.6  22.8 .    18.4 Validation
+Indonesia                                     29.9 6.4  3    16.4 2.8  4.8  Validation
+Isle of Man                                   43.9 10.1 .    11   .    .    Validation
+Jordan                                        22.3 3.8  9.8  25.5 .    30   Validation
+Kiribati                                      24.3 7.1  10.7 21.3 12   46   Validation
+Korea, North                                  33.8 9.3  .    14.6 .    3.9  Validation
+Korea, South                                  41.2 5.8  7.5  8.4  5    7.7  Validation
+Kosovo                                        28.7 .    .    .    4.3  .    Validation
+Mauritius                                     34.8 7    4.8  13.1 3.5  18.5 Validation
+Montenegro                                    40.2 9.6  7.6  10.2 .    22.5 Validation
+New Caledonia                                 31.7 5.6  .    15.2 .    .    Validation
+Niger                                         15.3 12.1 7.2  44.8 4.2  2.4  Validation
+Northern Mariana Islands                      32.7 3.8  .    17.2 .    .    Validation
+Norway                                        39.1 8.1  9    12.2 6.9  21.5 Validation
+Oman                                          25.4 3.3  2.6  24.3 4.3  20.9 Validation
+Paraguay                                      27.8 4.7  10.3 16.5 4.8  17.9 Validation
+Russia                                        39.3 13.6 6.3  11.3 4.1  26.5 Validation
+Saint Pierre and Miquelon                     45.9 9.8  .    7.2  .    .    Validation
+Samoa                                         23.9 5.3  6.8  20.6 5.8  54.1 Validation
+Sao Tome and Principe                         18.2 7    7.9  33.3 9.5  9.5  Validation
+Senegal                                       18.7 8.3  5    34   5.6  6.8  Validation
+Slovakia                                      40.1 9.8  7.8  9.8  4.2  25.4 Validation
+Sudan                                         19.6 7.5  7.2  28.5 .    6    Validation
+Swaziland                                     21.4 13.4 8.5  24.3 8.3  19.7 Validation
+Switzerland                                   42.2 8.2  11.3 10.5 5.2  17.5 Validation
+Tajikistan                                    24.2 6.1  5.8  23.8 3.9  8.6  Validation
+Tanzania                                      17.6 7.8  7    36   6.2  5    Validation
+Togo                                          19.7 7.1  8.6  33.7 4.5  4.3  Validation
+Uganda                                        15.7 10.4 8    43.4 3.3  4.3  Validation
+United Arab Emirates                          30.3 2    2.8  15.3 .    32.7 Validation
+Uruguay                                       34.7 9.4  8.9  13   4.5  24.8 Validation
+Virgin Islands                                45.6 8.9  .    10.2 .    .    Validation
